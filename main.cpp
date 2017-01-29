@@ -85,6 +85,9 @@ int main(int argc, char **argv)
     Utils utils;
     appEngine.rootContext()->setContextProperty("utils", &utils);
     appEngine.load(QUrl("qrc:/ApplicationRoot.qml"));
+    //really?
+    if (appEngine.rootObjects().isEmpty())
+        return -1;
     QMetaObject::invokeMethod(appEngine.rootObjects().first(), "load", Q_ARG(QVariant, startupUrl()));
 
     return app.exec();
