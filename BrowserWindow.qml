@@ -97,7 +97,7 @@ ApplicationWindow {
         }
     }
     Action { // search page
-        shortcut: "Ctrl+B"
+        shortcut: "Ctrl+S"
         onTriggered: {
             nav.visible = !nav.visible
             if (nav.visible) {
@@ -174,7 +174,7 @@ ApplicationWindow {
         }
     }
     Action {
-        shortcut: "Ctrl+s" // go to search
+        shortcut: "Ctrl+H" // go to search
         onTriggered: {
             currentWebView.url = "https://duckduckgo.com"
             tools.visible = false;
@@ -199,7 +199,7 @@ ApplicationWindow {
         }
     }
     Action {
-        shortcut: "Ctrl+F"
+        shortcut: "Ctrl+Shift+F"
         onTriggered: {
             if (currentWebView.state == "") {
                 currentWebView.state = "FullScreen"
@@ -217,11 +217,11 @@ ApplicationWindow {
         onTriggered: currentWebView.zoomFactor = 1.0;
     }
     Action {
-        shortcut: StandardKey.ZoomOut
+        shortcut: "Ctrl+-" //StandardKey.ZoomOut
         onTriggered: currentWebView.zoomFactor -= 0.1;
     }
     Action {
-        shortcut: StandardKey.ZoomIn
+        shortcut: "Ctrl++" //StandardKey.ZoomIn
         onTriggered: currentWebView.zoomFactor += 0.1;
     }
     Action {
@@ -253,11 +253,11 @@ ApplicationWindow {
         onTriggered: currentWebView.triggerWebAction(WebEngineView.Redo)
     }
     Action {
-        shortcut: "Ctrl+P" //StandardKey.Back
+        shortcut: "Ctrl+B" //StandardKey.Back
         onTriggered: currentWebView.triggerWebAction(WebEngineView.Back)
     }
     Action {
-        shortcut: "Ctrl+N" //StandardKey.Forward
+        shortcut: "Ctrl+F" //StandardKey.Forward
         onTriggered: currentWebView.triggerWebAction(WebEngineView.Forward)
     }
 
@@ -272,6 +272,14 @@ ApplicationWindow {
             return tab
         }
 
+        style: TabViewStyle {
+            padding {
+                left: 0
+                right: 0
+                top: -15 //0
+                bottom: -15 //0
+            }
+        }
         anchors.fill: parent
         Component.onCompleted: createEmptyTab(defaultProfile)
 
@@ -280,6 +288,8 @@ ApplicationWindow {
             WebEngineView {
                 id: webEngineView
                 focus: true
+                zoomFactor: 0.5;
+                //verticalScrollBar()->SetStyleSheet("QScrollBar {width:0px}")
 
                 onLinkHovered: {
                     if (hoveredUrl == "")
@@ -335,6 +345,7 @@ ApplicationWindow {
                         request.openIn(window.currentWebView)
                     }
                     tools.visible = false
+
                 }
 
                 onFullScreenRequested: {
@@ -400,7 +411,7 @@ ApplicationWindow {
             }
             background: Rectangle {
                 implicitWidth: 100
-                implicitHeight: 25
+                implicitHeight: 16 //25
                 border.color: "#999"
             }
         }
@@ -410,8 +421,8 @@ ApplicationWindow {
             x: 5
             z: 2
             y: 2
-            width: 20
-            height: 20
+            width: 10 //20
+            height: 10 //20
             sourceSize: Qt.size(width, height)
             source: currentWebView && currentWebView.icon
         }
@@ -427,15 +438,16 @@ ApplicationWindow {
             }
             style: TextFieldStyle {
                 textColor: "black"
-                selectionColor: "white"
+                //selectionColor: "white"
+                font.pixelSize: 12
                 background: Rectangle {
                     color: "gray" //"black"
                 }
 
                 padding {
-                    top: 0
+                    top: -7 //0
                     bottom: 0
-                    left: 28 //15
+                    left: 18 //15
                 }
             }
         }
@@ -486,7 +498,7 @@ ApplicationWindow {
                 style: ButtonStyle {
                     background: Rectangle {
                         implicitWidth: 100
-                        implicitHeight: 20
+                        implicitHeight: 10
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "#888"
                         radius: 4
@@ -516,13 +528,19 @@ ApplicationWindow {
             TextField {
                 id: search
                 style: TextFieldStyle {
+                    background: Rectangle {
+                        implicitWidth: 100
+                        implicitHeight: 16 //25
+                        border.color: "#999"
+                    }
                     padding {
                         left: 11;
                     }
                 }
                 focus: true
                 Layout.fillWidth: true
-                placeholderText: "search"
+                font.pixelSize: 10
+                placeholderText: "search this page"
                 onAccepted: currentWebView.findText(text)
             }
             ToolButton {
@@ -532,7 +550,7 @@ ApplicationWindow {
                 style: ButtonStyle {
                     background: Rectangle {
                         implicitWidth: 100
-                        implicitHeight: 20
+                        implicitHeight: 10
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "#888"
                         radius: 4
