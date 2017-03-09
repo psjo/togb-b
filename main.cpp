@@ -78,7 +78,7 @@ static QUrl startupUrl()
 
 int main(int argc, char **argv)
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     Application app(argc, argv);
     QtWebEngine::initialize();
     QQmlApplicationEngine appEngine;
@@ -86,6 +86,17 @@ int main(int argc, char **argv)
     appEngine.rootContext()->setContextProperty("utils", &utils);
     appEngine.load(QUrl("qrc:/ApplicationRoot.qml"));
     QMetaObject::invokeMethod(appEngine.rootObjects().first(), "load", Q_ARG(QVariant, startupUrl()));
+
+    /* begin style
+    QFile f("style.qss");
+    if (f.exists() && f.open(QFile::ReadOnly )) { //| QFile::Text)) {
+        QString qss(f.readAll());
+        app.setStyleSheet(qss); //f.readAll());
+        f.close();
+    } else 
+            return 1;
+    // end style */
+
 
     return app.exec();
 }

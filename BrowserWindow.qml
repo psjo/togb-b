@@ -288,7 +288,7 @@ ApplicationWindow {
             WebEngineView {
                 id: webEngineView
                 focus: true
-                zoomFactor: 0.5;
+                //zoomFactor: 0.5;
                 //verticalScrollBar()->SetStyleSheet("QScrollBar {width:0px}")
 
                 onLinkHovered: {
@@ -411,7 +411,7 @@ ApplicationWindow {
             }
             background: Rectangle {
                 implicitWidth: 100
-                implicitHeight: 16 //25
+                implicitHeight: 24 //16 //25
                 border.color: "#999"
             }
         }
@@ -421,8 +421,8 @@ ApplicationWindow {
             x: 5
             z: 2
             y: 2
-            width: 10 //20
-            height: 10 //20
+            width: 16 //20
+            height: 16 //20
             sourceSize: Qt.size(width, height)
             source: currentWebView && currentWebView.icon
         }
@@ -432,23 +432,14 @@ ApplicationWindow {
             anchors.right: parent.right
             placeholderText: "url"
             text: currentWebView && currentWebView.url
+            style: TextFieldStyle {
+                padding {
+                        left: 28 
+                }
+            }
             onAccepted: {
                 tools.visible = false
                 currentWebView.url = utils.fromUserInput(text)
-            }
-            style: TextFieldStyle {
-                textColor: "black"
-                //selectionColor: "white"
-                font.pixelSize: 12
-                background: Rectangle {
-                    color: "gray" //"black"
-                }
-
-                padding {
-                    top: -7 //0
-                    bottom: 0
-                    left: 18 //15
-                }
             }
         }
     }
@@ -527,17 +518,12 @@ ApplicationWindow {
             }
             TextField {
                 id: search
-                style: TextFieldStyle {
-                    background: Rectangle {
-                        implicitWidth: 100
-                        implicitHeight: 16 //25
-                        border.color: "#999"
-                    }
-                    padding {
-                        left: 11;
-                    }
-                }
                 focus: true
+                    style: TextFieldStyle {
+                        padding {
+                                left: 20 
+                        }
+                    }
                 Layout.fillWidth: true
                 font.pixelSize: 10
                 placeholderText: "search this page"
