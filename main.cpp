@@ -78,6 +78,7 @@ static QUrl startupUrl()
 
 int main(int argc, char **argv)
 {
+    /* this makes strange things with the resolution */
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     Application app(argc, argv);
     QtWebEngine::initialize();
@@ -87,16 +88,8 @@ int main(int argc, char **argv)
     appEngine.load(QUrl("qrc:/ApplicationRoot.qml"));
     QMetaObject::invokeMethod(appEngine.rootObjects().first(), "load", Q_ARG(QVariant, startupUrl()));
 
-    /* begin style
-    QFile f("style.qss");
-    if (f.exists() && f.open(QFile::ReadOnly )) { //| QFile::Text)) {
-        QString qss(f.readAll());
-        app.setStyleSheet(qss); //f.readAll());
-        f.close();
-    } else 
-            return 1;
-    // end style */
-
+    app.setStyleSheet("QScrollBar::vertical {width: 0 }");
+    app.setStyleSheet("QScrollBar::horizontal {width: 0 }");
 
     return app.exec();
 }

@@ -90,13 +90,13 @@ ApplicationWindow {
         property alias touchIconsEnabled: touchIconsEnabled.checked;
     }
 
-    Action {
+    Action { // download window
         shortcut: "Ctrl+D"
         onTriggered: {
             downloadView.visible = !downloadView.visible
         }
     }
-    Action { // search page
+    Action { // search page at top of window
         shortcut: "Ctrl+S"
         onTriggered: {
             nav.visible = !nav.visible
@@ -109,7 +109,7 @@ ApplicationWindow {
             }
         }
     }
-    Action {
+    Action { // address bar
         id: focus
         shortcut: "Ctrl+L"
         onTriggered: {
@@ -150,9 +150,23 @@ ApplicationWindow {
         }
     }
     Action {
+        shortcut: "Ctrl+Tab" //next tab
+        onTriggered: {
+            tabs.currentIndex = (tabs.currentIndex + 1) % tabs.count
+            currentWebView.forceActiveFocus()
+        }
+    }
+    Action {
         shortcut: "Ctrl+." //next tab
         onTriggered: {
             tabs.currentIndex = (tabs.currentIndex + 1) % tabs.count
+            currentWebView.forceActiveFocus()
+        }
+    }
+    Action {
+        shortcut: "Shift+Ctrl+Tab" //prev tab
+        onTriggered: {
+            tabs.currentIndex = (tabs.count + tabs.currentIndex - 1) % tabs.count
             currentWebView.forceActiveFocus()
         }
     }
@@ -182,7 +196,7 @@ ApplicationWindow {
         }
     }
     Action {
-        shortcut: "Ctrl+w" //StandardKey.Close
+        shortcut: "Ctrl+W" //StandardKey.Close
         onTriggered: {
             currentWebView.triggerWebAction(WebEngineView.RequestClose);
             tools.visible = false;
@@ -288,8 +302,6 @@ ApplicationWindow {
             WebEngineView {
                 id: webEngineView
                 focus: true
-                //zoomFactor: 0.5;
-                //verticalScrollBar()->SetStyleSheet("QScrollBar {width:0px}")
 
                 onLinkHovered: {
                     if (hoveredUrl == "")
