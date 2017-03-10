@@ -190,7 +190,9 @@ ApplicationWindow {
     Action {
         shortcut: "Ctrl+H" // go to search
         onTriggered: {
-            currentWebView.url = "https://duckduckgo.com"
+            //currentWebView.url = "file://" + home + "/.local/homepage.html"
+            //currentWebView.url = "file:///home/keso/.local/homepage.html"
+            currentWebView.url = utils.home()
             tools.visible = false;
             currentWebView.forceActiveFocus()
         }
@@ -273,6 +275,10 @@ ApplicationWindow {
     Action {
         shortcut: "Ctrl+F" //StandardKey.Forward
         onTriggered: currentWebView.triggerWebAction(WebEngineView.Forward)
+    }
+    Action {
+        shortcut: "Ctrl+Q"
+        onTriggered: Qt.quit()
     }
 
     TabView {

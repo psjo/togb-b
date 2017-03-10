@@ -93,6 +93,8 @@ int main(int argc, char **argv)
 
     app.setStyleSheet("QScrollBar::vertical {width: 0 }");
     app.setStyleSheet("QScrollBar::horizontal {width: 0 }");
+    app.setApplicationName("togb-b");
+    app.setOrganizationName("togb");
 
     return app.exec();
 }

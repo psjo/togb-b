@@ -52,11 +52,13 @@
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QUrl>
+#include <QStandardPaths>
 
 class Utils : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE static QUrl fromUserInput(const QString& userInput);
+    Q_INVOKABLE static QUrl home( void );
 };
 
 inline QUrl Utils::fromUserInput(const QString& userInput)
@@ -68,6 +70,16 @@ inline QUrl Utils::fromUserInput(const QString& userInput)
     if (url.isValid())
         return url;
     return QUrl::fromUserInput("https://duckduckgo.com/?q=" + userInput);
+}
+
+inline QUrl Utils::home( void )
+{
+    QString home = QStandardPaths::writableLocation( QStandardPaths::HomeLocation );
+    QString homepage = home + "/.local/homepage.html";
+    QFileInfo fileInfo(homepage);
+    if (fileInfo.exists())
+        return QUrl::fromUserInput(homepage);
+    return QUrl::fromUserInput("about:blank");
 }
 
 #endif // UTILS_H
